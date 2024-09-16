@@ -20,10 +20,9 @@ import java.util.Objects;
         @Index(columnList = "createAt"),
         @Index(columnList = "createdBy")
 })
-@EntityListeners(AuditingEntityListener.class)
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ArticleComment {
+public class ArticleComment extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
