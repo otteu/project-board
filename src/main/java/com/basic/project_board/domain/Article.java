@@ -1,9 +1,7 @@
 package com.basic.project_board.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -22,9 +20,9 @@ import java.util.Set;
         @Index(columnList = "createAt"),
         @Index(columnList = "createdBy")
 })
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Article extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,13 +36,6 @@ public class Article {
     @OrderBy("id")
     @OneToMany(mappedBy = "article")
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
-
-    @CreatedDate @Column(nullable = false) private LocalDateTime createAt;     // 생성일자
-    @CreatedBy @Column(nullable = false) private String createdBy;           // 생성자
-    @LastModifiedDate @Column(nullable = false) private LocalDateTime modifiedAt;   // 수정일자
-    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy;          // 수정자
-
-    protected Article() {}
 
     private Article(String title, String content, String hashtag) {
         this.title = title;
