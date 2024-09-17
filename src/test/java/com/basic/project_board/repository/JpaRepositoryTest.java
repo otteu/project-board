@@ -29,7 +29,8 @@ class JpaRepositoryTest {
             @Autowired
             ArticleRepository articleRepository,
             @Autowired
-            ArticleCommentRepository articleCommentRepository) {
+            ArticleCommentRepository articleCommentRepository
+    ) {
         this.articleRepository = articleRepository;
         this.articleCommentRepository = articleCommentRepository;
     }
