@@ -20,21 +20,29 @@ import java.util.Set;
         @Index(columnList = "createAt"),
         @Index(columnList = "createdBy")
 })
+@ToString
+// @ToString(of = {"title", "content"})
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "article_id")
     private Long id;
 
 
-    @Setter @Column(nullable = false) private String title;               // 제목
-    @Setter @Column(nullable = false, length = 10000)private String content;               // 본문
-    @Setter private String hashtag;             // 해시태그
+    @Setter @Column(nullable = false)
+    private String title;               // 제목
+
+    @Setter @Column(nullable = false, length = 10000)
+    private String content;               // 본문
+
+    @Setter
+    private String hashtag;             // 해시태그
 
     @ToString.Exclude
     @OrderBy("id")
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
     private Article(String title, String content, String hashtag) {
